@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Napo — Pizza Napolitana Artesanal | Tijuca</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    /* ── RESET & VARIÁVEIS ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg-color: #FAFAF8;
+      --surface: #FFFFFF;
+      --brand-red: #D9381E;
+      --brand-red-dark: #A62814;
+      --text-main: #1A1A1A;
+      --text-mute: #6B6B6B;
+      --border-color: #E8E4DE;
+      --font-display: 'Space Grotesk', sans-serif;
+      --font-body: 'Inter', sans-serif;
+      
+      --spacing-sm: 1.25rem;
+      --spacing-md: 2.5rem;
+      --spacing-lg: 5rem;
+    }
+
+    html { scroll-behavior: smooth; scroll-padding-top: 140px; }
+
+    body {
+      background: var(--bg-color);
+      color: var(--text-main);
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      padding-bottom: 110px; 
+    }
+
+    /* ── NAVEGAÇÃO PRINCIPAL ── */
+    nav {
+      background: rgba(255, 255, 255, 0.98);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 1px solid var(--border-color);
+      padding: 1rem var(--spacing-sm);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .nav-brand {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--brand-red);
+      text-decoration: none;
+      letter-spacing: -0.02em;
+    }
+
+    .nav-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-weight: 500;
+      color: #2E7D32;
+      font-size: 0.85rem;
+    }
+    .nav-status::before {
+      content: '';
+      width: 8px;
+      height: 8px;
+      background: #4CAF50;
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(76, 175, 80, 0.4); }
+      70% { box-shadow: 0 0 0 6px rgba(76, 175, 80, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(76, 175, 80, 0); }
+    }
+
+    /* ── CATEGORY NAV (Scroll Horizontal Mobile) ── */
+    .category-nav {
+      background: var(--surface);
+      position: sticky;
+      top: 60px;
+      z-index: 90;
+      padding: 0.75rem var(--spacing-sm);
+      display: flex;
+      gap: 0.75rem;
+      overflow-x: auto;
+      border-bottom: 1px solid var(--border-color);
+      scrollbar-width: none;
+    }
+    .category-nav::-webkit-scrollbar { display: none; }
+
+    .cat-pill {
+      background: var(--bg-color);
+      border: 1px solid var(--border-color);
+      padding: 0.4rem 1rem;
+      border-radius: 2rem;
+      font-family: var(--font-display);
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--text-mute);
+      white-space: nowrap;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .cat-pill.active, .cat-pill:hover {
+      background: var(--brand-red);
+      border-color: var(--brand-red);
+      color: white;
+    }
+
+    /* ── HERO SECTION ── */
+    .hero {
+      background: linear-gradient(rgba(26, 26, 26, 0.75), rgba(26, 26, 26, 0.9)), url('https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=1200&q=80') center/cover;
+      color: white;
+      padding: var(--spacing-lg) var(--spacing-sm);
+      text-align: center;
+    }
+
+    .hero-container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(4px);
+      padding: 0.4rem 1rem;
+      border-radius: 2rem;
+      font-family: var(--font-display);
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 6vw, 3.5rem);
+      font-weight: 700;
+      line-height: 1.1;
+      margin-bottom: 1rem;
+    }
+
+    .hero-desc {
+      font-size: clamp(1rem, 2vw, 1.15rem);
+      color: rgba(255, 255, 255, 0.85);
+      max-width: 550px;
+      margin: 0 auto;
+    }
+
+    /* ── LANDING PAGE FEATURES ── */
+    .features-section {
+      padding: var(--spacing-md) var(--spacing-sm);
+      background: var(--surface);
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .feature-card {
+      padding: 1.5rem;
+      background: var(--bg-color);
+      border-radius: 12px;
+      text-align: center;
+      border: 1px solid var(--border-color);
+    }
+
+    .feature-icon {
+      font-size: 2rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .feature-title {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--brand-red);
+      margin-bottom: 0.5rem;
+    }
+
+    .feature-desc {
+      font-size: 0.85rem;
+      color: var(--text-mute);
+      line-height: 1.5;
+    }
+
+    /* ── CARDÁPIO HTML SEMÂNTICO ── */
+    .menu-section {
+      padding: var(--spacing-md) var(--spacing-sm);
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .menu-category-title {
+      font-family: var(--font-display);
+      font-size: clamp(1.5rem, 4vw, 2rem);
+      color: var(--text-main);
+      margin: var(--spacing-md) 0 1.5rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid var(--border-color);
+    }
+
+    .menu-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.25rem;
+    }
+
+    .menu-card {
+      background: var(--surface);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 1.25rem;
+      display: flex;
+      gap: 1.25rem;
+      transition: transform 0.2s, box-shadow 0.2s;
+      align-items: center;
+    }
+
+    .menu-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.04);
+    }
+
+    .card-content { flex: 1; }
+
+    .card-title {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--text-main);
+      margin-bottom: 0.4rem;
+    }
+
+    .card-desc {
+      font-size: 0.85rem;
+      color: var(--text-mute);
+      margin-bottom: 1rem;
+      line-height: 1.5;
+    }
+
+    .card-price {
+      font-weight: 600;
+      font-size: 1.05rem;
+      color: var(--brand-red);
+    }
+
+    .card-image {
+      width: 90px;
+      height: 90px;
+      border-radius: 8px;
+      object-fit: cover;
+      background: #F0F0F0;
+      flex-shrink: 0;
+    }
+
+    /* ── SEÇÃO SOBRE A MASSA ── */
+    .about-section {
+      background: var(--surface);
+      padding: var(--spacing-lg) var(--spacing-sm);
+      text-align: center;
+      border-top: 1px solid var(--border-color);
+      border-bottom: 1px solid var(--border-color);
+      margin-top: var(--spacing-md);
+    }
+
+    .about-container {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .about-title {
+      font-family: var(--font-display);
+      font-size: 1.8rem;
+      color: var(--text-main);
+      margin-bottom: 1rem;
+    }
+
+    .about-text {
+      color: var(--text-mute);
+      font-size: 0.95rem;
+    }
+
+    /* ── SEÇÃO DE PROVA SOCIAL (NOVA) ── */
+    .reviews-section {
+      padding: var(--spacing-lg) var(--spacing-sm);
+      background: var(--bg-color);
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .reviews-header {
+      text-align: center;
+      margin-bottom: var(--spacing-md);
+    }
+
+    .reviews-title {
+      font-family: var(--font-display);
+      font-size: clamp(1.5rem, 4vw, 2rem);
+      color: var(--text-main);
+    }
+
+    .reviews-grid {
+      display: flex;
+      gap: 1.25rem;
+      overflow-x: auto;
+      padding-bottom: 1rem;
+      scrollbar-width: none;
+    }
+    .reviews-grid::-webkit-scrollbar { display: none; }
+
+    .review-card {
+      min-width: 280px;
+      background: var(--surface);
+      padding: 1.5rem;
+      border-radius: 12px;
+      border: 1px solid var(--border-color);
+      flex-shrink: 0;
+    }
+
+    .review-stars {
+      color: #F59E0B;
+      font-size: 1.2rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .review-text {
+      font-size: 0.9rem;
+      color: var(--text-main);
+      line-height: 1.5;
+      font-style: italic;
+      margin-bottom: 1rem;
+    }
+
+    .review-author {
+      font-weight: 600;
+      font-size: 0.85rem;
+      color: var(--brand-red);
+    }
+
+    .review-source {
+      font-size: 0.75rem;
+      color: var(--text-mute);
+    }
+
+    /* ── RODAPÉ ── */
+    footer {
+      background: #1A1A1A;
+      color: white;
+      padding: var(--spacing-lg) var(--spacing-sm) 120px; 
+      text-align: center;
+    }
+
+    .footer-brand {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--brand-red);
+      margin-bottom: 1rem;
+    }
+
+    .footer-info {
+      color: rgba(255,255,255,0.6);
+      font-size: 0.9rem;
+      margin-bottom: 0.5rem;
+    }
+
+    /* ── THUMB-ZONE CTA (Botão Flutuante) ── */
+    .fab-container {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      padding: 1rem var(--spacing-sm) 1.5rem;
+      background: linear-gradient(to top, rgba(255,255,255,1) 70%, rgba(255,255,255,0) 100%);
+      z-index: 90;
+      display: flex;
+      justify-content: center;
+      pointer-events: none; 
+    }
+
+    .btn-floating {
+      pointer-events: auto;
+      background: var(--brand-red);
+      color: white;
+      text-decoration: none;
+      font-family: var(--font-display);
+      font-size: 1.05rem;
+      font-weight: 600;
+      width: 100%;
+      max-width: 440px;
+      height: 56px;
+      border-radius: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      box-shadow: 0 10px 25px rgba(217, 56, 30, 0.3);
+      transition: background 0.2s, transform 0.2s;
+    }
+
+    .btn-floating:hover, .btn-floating:active {
+      background: var(--brand-red-dark);
+      transform: scale(0.98);
+    }
+
+    .btn-floating svg { width: 22px; height: 22px; fill: currentColor; }
+
+    /* ── MEDIA QUERIES PARA DESKTOP ── */
+    @media (min-width: 768px) {
+      .features-grid { grid-template-columns: repeat(3, 1fr); }
+      .menu-grid { grid-template-columns: repeat(2, 1fr); gap: 2rem; }
+      .category-nav { justify-content: center; top: 69px; }
+      .card-image { width: 120px; height: 120px; }
+      .reviews-grid { display: grid; grid-template-columns: repeat(3, 1fr); overflow-x: visible; }
+      .review-card { min-width: auto; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="#" class="nav-brand">Napo.</a>
+    <span class="nav-status">Aberto agora</span>
+  </nav>
+
+  <div class="category-nav">
+    <a href="#classicas" class="cat-pill active">Clássicas</a>
+    <a href="#especiais" class="cat-pill">Especiais</a>
+    <a href="#bebidas" class="cat-pill">Bebidas</a>
+    <a href="#sobre" class="cat-pill">A Massa</a>
+  </div>
+
+  <header class="hero">
+    <div class="hero-container">
+      <span class="hero-badge">Farinha 00 Italiana</span>
+      <h1 class="hero-title">A verdadeira pizza<br>Napolitana na Tijuca.</h1>
+      <p class="hero-desc">Esqueça as taxas dos aplicativos. Peça direto no nosso sistema próprio e receba a pizza mais rápida, quente e com o melhor preço.</p>
+    </div>
+  </header>
+
+  <section class="features-section">
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">🛵</div>
+        <h3 class="feature-title">Entrega Prioritária</h3>
+        <p class="feature-desc">Pedidos feitos por aqui caem direto na nossa cozinha. Sem intermediários, sua pizza chega muito mais rápido e quente.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">💰</div>
+        <h3 class="feature-title">Preço Justo</h3>
+        <p class="feature-desc">Aplicativos cobram até 30% de taxa. Comprando direto conosco, você garante o valor real do cardápio sem taxas ocultas.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🍕</div>
+        <h3 class="feature-title">Programa de Fidelidade</h3>
+        <p class="feature-desc">A cada 10 pedidos realizados exclusivamente no nosso sistema próprio, você ganha uma Margherita DOP por nossa conta.</p>
+      </div>
+    </div>
+  </section>
+
+  <main class="menu-section">
+    
+    <h2 id="classicas" class="menu-category-title">Pizzas Clássicas</h2>
+    <div class="menu-grid">
+      <article class="menu-card">
+        <div class="card-content">
+          <h3 class="card-title">Margherita DOP</h3>
+          <p class="card-desc">Molho de tomates San Marzano, mozzarella di bufala fresca, manjericão e azeite extravirgem.</p>
+          <span class="card-price">R$ 54,00</span>
+        </div>
+        <img src="https://images.unsplash.com/photo-1574071318508-1cdbab80d002?auto=format&fit=crop&w=200&q=80" alt="Pizza Margherita" class="card-image" loading="lazy">
+      </article>
+
+      <article class="menu-card">
+        <div class="card-content">
+          <h3 class="card-title">Marinara (Vegana)</h3>
+          <p class="card-desc">A mais tradicional de Nápoles. Molho San Marzano abundante, alho confit e orégano fresco.</p>
+          <span class="card-price">R$ 48,00</span>
+        </div>
+        <img src="https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?auto=format&fit=crop&w=200&q=80" alt="Pizza Marinara" class="card-image" loading="lazy">
+      </article>
+    </div>
+
+    <h2 id="especiais" class="menu-category-title">Pizzas Especiais</h2>
+    <div class="menu-grid">
+      <article class="menu-card">
+        <div class="card-content">
+          <h3 class="card-title">Diavola Piccante</h3>
+          <p class="card-desc">Molho San Marzano, fior di latte, salame artesanal levemente picante e mel silvestre.</p>
+          <span class="card-price">R$ 62,00</span>
+        </div>
+        <img src="https://images.unsplash.com/photo-1628840042765-356cda07504e?auto=format&fit=crop&w=200&q=80" alt="Pizza Diavola" class="card-image" loading="lazy">
+      </article>
+
+      <article class="menu-card">
+        <div class="card-content">
+          <h3 class="card-title">Burrata & Parma</h3>
+          <p class="card-desc">Focaccia de massa napolitana assada a lenha, burrata inteira cremosa, presunto cru italiano e rúcula selvagem.</p>
+          <span class="card-price">R$ 78,00</span>
+        </div>
+        <img src="https://images.unsplash.com/photo-1573821663912-6df460f9c684?auto=format&fit=crop&w=200&q=80" alt="Pizza de Burrata" class="card-image" loading="lazy">
+      </article>
+      
+      <article class="menu-card">
+        <div class="card-content">
+          <h3 class="card-title">Pistacchio e Mortadella</h3>
+          <p class="card-desc">Base bianca de fior di latte, mortadela italiana com pistache, stracciatella e granela de pistache torrado.</p>
+          <span class="card-price">R$ 82,00</span>
+        </div>
+        <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=200&q=80" alt="Pizza de Mortadela" class="card-image" loading="lazy">
+      </article>
+    </div>
+
+    <h2 id="bebidas" class="menu-category-title">Bebidas</h2>
+    <div class="menu-grid">
+      <article class="menu-card">
+        <div class="card-content">
+          <h3 class="card-title">Refrigerantes (Lata 350ml)</h3>
+          <p class="card-desc">Coca-Cola, Coca Zero, Guaraná Antarctica ou Sprite.</p>
+          <span class="card-price">R$ 8,00</span>
+        </div>
+      </article>
+      <article class="menu-card">
+        <div class="card-content">
+          <h3 class="card-title">Cerveja Artesanal Napo</h3>
+          <p class="card-desc">IPA ou Pilsen. Lata 473ml. Perfeita harmonização com a fermentação natural.</p>
+          <span class="card-price">R$ 22,00</span>
+        </div>
+      </article>
+    </div>
+  </main>
+
+  <section id="sobre" class="about-section">
+    <div class="about-container">
+      <h2 class="about-title">Ciência, tempo e fogo.</h2>
+      <p class="about-text">
+        Nossa massa descansa por 48 horas em temperatura controlada. Isso quebra o glúten de forma natural, resultando em uma pizza leve, com bordas alveoladas ("cornicione") e que não pesa no estômago. Assamos a 400°C em forno à lenha por apenas 90 segundos.
+      </p>
+    </div>
+  </section>
+
+  <section class="reviews-section">
+    <div class="reviews-header">
+      <h2 class="reviews-title">Quem prova, não pede em outro lugar.</h2>
+    </div>
+    <div class="reviews-grid">
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"Chegou na Tijuca em 25 minutos! A massa é surreal de leve e a pizza chegou pelando. Esqueçam os apps, pelo site deles é muito melhor."</p>
+        <p class="review-author">Mariana S.</p>
+        <span class="review-source">Cliente Verificado</span>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"Melhor Margherita que já comi no Rio. O fato de não cobrarem taxa absurda de entrega pelo site próprio já me ganhou como cliente."</p>
+        <p class="review-author">Ricardo M.</p>
+        <span class="review-source">Cliente Verificado</span>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"Pedir direto pelo site foi super rápido, sem precisar fazer cadastro gigante. A pizza de Pistacchio é brincadeira de tão boa."</p>
+        <p class="review-author">Fernanda T.</p>
+        <span class="review-source">Cliente Verificado</span>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-brand">Napo.</div>
+    <p class="footer-info">Rua Conde de Bonfim, Tijuca, Rio de Janeiro - RJ</p>
+    <p class="footer-info">Terça a Domingo — 18h às 23h30</p>
+    <p class="footer-info" style="margin-top: 2rem; font-size: 0.8rem; opacity: 0.5;">© 2026 Napo Pizza. Projeto fictício para portfólio.</p>
+  </footer>
+
+  <div class="fab-container">
+    <a href="#" class="btn-floating">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+        <path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/>
+      </svg>
+      Realizar Pedido Dinâmico Aqui
+    </a>
+  </div>
+
+  <script>
+    // Script simples para mudar o botão ativo na navegação de categorias
+    const catPills = document.querySelectorAll('.cat-pill');
+    catPills.forEach(pill => {
+      pill.addEventListener('click', function() {
+        catPills.forEach(p => p.classList.remove('active'));
+        this.classList.add('active');
+      });
+    });
+  </script>
+</body>
+</html>

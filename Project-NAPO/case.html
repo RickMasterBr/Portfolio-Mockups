@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Napo — Pizza Napolitana Artesanal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #FAFAF8;
+      --surface: #FFFFFF;
+      --red-brand: #D9381E;
+      --red-dark: #A62814;
+      --text-main: #1A1A1A;
+      --text-mute: #6B6B6B;
+      --border: #E8E4DE;
+      --accent: #F4EBE8;
+      --font-display: 'Space Grotesk', sans-serif;
+      --font-body: 'Inter', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text-main);
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.5;
+      padding-bottom: 90px; /* Espaço para o botão fixo (Thumb-zone) */
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── CONTAINER MOBILE-FIRST ── */
+    .app-container {
+      max-width: 480px; /* Simula a restrição de uma tela mobile no desktop */
+      margin: 0 auto;
+      background: var(--surface);
+      min-height: 100vh;
+      box-shadow: 0 0 40px rgba(0,0,0,0.05);
+      position: relative;
+    }
+
+    /* ── HEADER ── */
+    header {
+      padding: 1.5rem 1.25rem 1rem;
+      position: sticky;
+      top: 0;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(8px);
+      z-index: 50;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    .brand-name {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      color: var(--red-brand);
+    }
+
+    .delivery-info {
+      text-align: right;
+    }
+
+    .delivery-time {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--text-main);
+      display: block;
+    }
+
+    .delivery-fee {
+      font-size: 0.7rem;
+      color: var(--text-mute);
+    }
+
+    /* ── CATEGORY NAV (Scroll Horizontal) ── */
+    .category-nav {
+      display: flex;
+      gap: 0.75rem;
+      overflow-x: auto;
+      padding-bottom: 0.5rem;
+      scrollbar-width: none; /* Firefox */
+    }
+    .category-nav::-webkit-scrollbar { display: none; }
+
+    .cat-btn {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      padding: 0.5rem 1rem;
+      border-radius: 2rem;
+      font-family: var(--font-display);
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--text-mute);
+      white-space: nowrap;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+
+    .cat-btn.active {
+      background: var(--red-brand);
+      border-color: var(--red-brand);
+      color: white;
+    }
+
+    /* ── HERO BANNER ── */
+    .hero-banner {
+      background: linear-gradient(135deg, #1A1A1A 0%, #2D2D2D 100%);
+      padding: 2rem 1.25rem;
+      color: white;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-tag {
+      display: inline-block;
+      background: rgba(255,255,255,0.1);
+      padding: 0.25rem 0.75rem;
+      border-radius: 1rem;
+      font-size: 0.7rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 1rem;
+    }
+
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: 1.8rem;
+      line-height: 1.1;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .hero-desc {
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.7);
+      max-width: 90%;
+    }
+
+    /* ── MENU LIST (Substituindo o PDF) ── */
+    .menu-section {
+      padding: 2rem 1.25rem 1rem;
+    }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 1.25rem;
+      color: var(--text-main);
+    }
+
+    .menu-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .menu-item {
+      display: flex;
+      gap: 1rem;
+      padding-bottom: 1.25rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .item-content {
+      flex: 1;
+    }
+
+    .item-name {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+    }
+
+    .item-desc {
+      font-size: 0.8rem;
+      color: var(--text-mute);
+      line-height: 1.4;
+      margin-bottom: 0.75rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .item-price {
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: var(--text-main);
+    }
+
+    .item-img-placeholder {
+      width: 90px;
+      height: 90px;
+      border-radius: 12px;
+      background: var(--accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      flex-shrink: 0;
+    }
+
+    .add-btn {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      color: var(--text-main);
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 500;
+      font-size: 1.2rem;
+      cursor: pointer;
+      margin-top: -10px;
+      float: right;
+    }
+
+    /* ── THUMB-ZONE CTA (Lei de Fitts) ── */
+    .floating-cart {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      padding: 1rem 1.25rem 1.5rem;
+      background: linear-gradient(to top, rgba(255,255,255,1) 80%, rgba(255,255,255,0) 100%);
+      z-index: 100;
+      display: flex;
+      justify-content: center;
+    }
+
+    .cart-btn {
+      background: var(--red-brand);
+      color: white;
+      width: 100%;
+      max-width: 440px;
+      height: 56px; /* Tap target > 44px */
+      border-radius: 12px;
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 1.5rem;
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 600;
+      box-shadow: 0 8px 24px rgba(217, 56, 30, 0.25);
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .cart-btn:active {
+      transform: scale(0.98);
+      background: var(--red-dark);
+    }
+
+    .cart-qty {
+      background: rgba(255,255,255,0.2);
+      padding: 0.2rem 0.6rem;
+      border-radius: 6px;
+      font-size: 0.85rem;
+    }
+
+    /* ── ANIMATIONS ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(15px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+  </style>
+</head>
+<body>
+
+  <div class="app-container">
+    
+    <header>
+      <div class="header-top">
+        <div class="brand-name">Napo.</div>
+        <div class="delivery-info">
+          <span class="delivery-time">35 - 45 min</span>
+          <span class="delivery-fee">Entrega R$ 5,00</span>
+        </div>
+      </div>
+      
+      <nav class="category-nav">
+        <a href="#pizzas" class="cat-btn active">Pizzas Clássicas</a>
+        <a href="#especiais" class="cat-btn">Especiais</a>
+        <a href="#bebidas" class="cat-btn">Bebidas</a>
+        <a href="#sobremesas" class="cat-btn">Dolci</a>
+      </nav>
+    </header>
+
+    <div class="hero-banner reveal">
+      <span class="hero-tag">Fermentação Natural</span>
+      <h1 class="hero-title">A verdadeira<br>Napolitana na Tijuca.</h1>
+      <p class="hero-desc">Massa maturada por 48h, farinha 00 e molho de tomates San Marzano DOP.</p>
+    </div>
+
+    <section id="pizzas" class="menu-section">
+      <h2 class="section-title reveal">Pizzas Clássicas</h2>
+      
+      <div class="menu-grid">
+        <div class="menu-item reveal">
+          <div class="item-content">
+            <h3 class="item-name">Margherita DOP</h3>
+            <p class="item-desc">Molho de tomate San Marzano, mozzarella di bufala fresca, manjericão e azeite extravirgem.</p>
+            <span class="item-price">R$ 54,00</span>
+          </div>
+          <div class="item-visual">
+            <div class="item-img-placeholder">🍅</div>
+            <button class="add-btn">+</button>
+          </div>
+        </div>
+
+        <div class="menu-item reveal">
+          <div class="item-content">
+            <h3 class="item-name">Diavola Piccante</h3>
+            <p class="item-desc">Molho San Marzano, fior di latte, salame artesanal picante, mel com pimenta e parmesão.</p>
+            <span class="item-price">R$ 62,00</span>
+          </div>
+          <div class="item-visual">
+            <div class="item-img-placeholder">🌶️</div>
+            <button class="add-btn">+</button>
+          </div>
+        </div>
+
+        <div class="menu-item reveal">
+          <div class="item-content">
+            <h3 class="item-name">Marinara Clássica (Vegana)</h3>
+            <p class="item-desc">Molho de tomate San Marzano abundante, alho confit, orégano fresco e azeite de oliva extra virgem.</p>
+            <span class="item-price">R$ 48,00</span>
+          </div>
+          <div class="item-visual">
+            <div class="item-img-placeholder">🧄</div>
+            <button class="add-btn">+</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="bebidas" class="menu-section">
+      <h2 class="section-title reveal">Bebidas</h2>
+      
+      <div class="menu-grid">
+        <div class="menu-item reveal">
+          <div class="item-content">
+            <h3 class="item-name">Refrigerante Artesanal</h3>
+            <p class="item-desc">Limão Siciliano ou Tangerina (Lata 350ml)</p>
+            <span class="item-price">R$ 12,00</span>
+          </div>
+          <div class="item-visual">
+            <div class="item-img-placeholder" style="background: #FFF1CD;">🍋</div>
+            <button class="add-btn">+</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="floating-cart">
+      <a href="#" class="cart-btn">
+        <div style="display: flex; align-items: center; gap: 0.75rem;">
+          <span class="cart-qty">2</span>
+          <span>Finalizar Pedido Dinâmico</span>
+        </div>
+        <span>R$ 116,00</span>
+      </a>
+    </div>
+
+  </div>
+
+  <script>
+    // Interação simples de scroll para animar os itens da lista
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    reveals.forEach(el => observer.observe(el));
+
+    // Ativação da tab superior ao clicar
+    const catBtns = document.querySelectorAll('.cat-btn');
+    catBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        catBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+      });
+    });
+  </script>
+</body>
+</html>
