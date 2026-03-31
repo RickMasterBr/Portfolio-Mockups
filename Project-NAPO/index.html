@@ -423,6 +423,116 @@
 
     .btn-floating svg { width: 22px; height: 22px; fill: currentColor; }
 
+    /* ── SEÇÃO DE LOCALIZAÇÃO ── */
+    .location-section {
+      padding: var(--spacing-lg) var(--spacing-sm);
+      background: var(--surface);
+      border-top: 1px solid var(--border-color);
+    }
+    .location-container {
+      max-width: 1000px;
+      margin: 0 auto;
+      display: grid;
+      gap: 2rem;
+    }
+    .loc-content {
+      text-align: center;
+    }
+    .loc-title {
+      font-family: var(--font-display);
+      font-size: clamp(1.5rem, 4vw, 2rem);
+      color: var(--text-main);
+      margin-bottom: 1rem;
+    }
+    .loc-text {
+      color: var(--text-mute);
+      font-size: 0.95rem;
+      margin-bottom: 1.5rem;
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .loc-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      justify-content: center;
+    }
+    .loc-badge {
+      background: var(--bg-color);
+      border: 1px solid var(--border-color);
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.85rem;
+      color: var(--brand-red);
+    }
+
+    /* ── SEÇÃO FAQ (SEMÂNTICA HTML5) ── */
+    .faq-section {
+      padding: var(--spacing-lg) var(--spacing-sm);
+      background: var(--bg-color);
+    }
+    .faq-container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .faq-title {
+      font-family: var(--font-display);
+      font-size: clamp(1.5rem, 4vw, 2rem);
+      color: var(--text-main);
+      text-align: center;
+      margin-bottom: var(--spacing-md);
+    }
+    .faq-item {
+      border-bottom: 1px solid var(--border-color);
+    }
+    .faq-item:last-child {
+      border-bottom: none;
+    }
+    .faq-item summary {
+      width: 100%;
+      text-align: left;
+      padding: 1.25rem 0;
+      font-weight: 600;
+      font-size: 1rem;
+      color: var(--text-main);
+      cursor: pointer;
+      list-style: none; /* Remove a setinha padrão no Chrome/Safari */
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .faq-item summary::-webkit-details-marker {
+      display: none;
+    }
+    .faq-item summary::after {
+      content: '+';
+      font-size: 1.5rem;
+      color: var(--brand-red);
+      font-weight: 400;
+    }
+    .faq-item[open] summary::after {
+      content: '−';
+    }
+    .faq-answer {
+      padding-bottom: 1.25rem;
+      color: var(--text-mute);
+      font-size: 0.9rem;
+      line-height: 1.6;
+    }
+
+    @media (min-width: 768px) {
+      .location-container {
+        grid-template-columns: 1fr 1fr;
+        align-items: center;
+        text-align: left;
+      }
+      .loc-content { text-align: left; }
+      .loc-text { margin-left: 0; }
+      .loc-badges { justify-content: flex-start; }
+    }
+
     /* ── MEDIA QUERIES PARA DESKTOP ── */
     @media (min-width: 768px) {
       .features-grid { grid-template-columns: repeat(3, 1fr); }
@@ -580,6 +690,50 @@
         <p class="review-author">Fernanda T.</p>
         <span class="review-source">Cliente Verificado</span>
       </div>
+    </div>
+  </section>
+
+  <section class="location-section">
+    <div class="location-container">
+      <div class="loc-content">
+        <h2 class="loc-title">Entregamos com a nossa frota própria.</h2>
+        <p class="loc-text">Para garantir que a sua pizza napolitana chegue com o queijo derretido e a borda intacta, restringimos nossa área de entrega para garantir a qualidade do forno até a sua mesa.</p>
+        <div class="loc-badges">
+          <span class="loc-badge">Tijuca</span>
+          <span class="loc-badge">Maracanã</span>
+          <span class="loc-badge">Vila Isabel</span>
+          <span class="loc-badge">Grajaú</span>
+        </div>
+      </div>
+      <div style="background: #E8E4DE; border-radius: 12px; height: 250px; display: flex; align-items: center; justify-content: center; color: var(--text-mute); font-size: 0.9rem; font-style: italic;">
+        [Mapa Interativo da Região Integrado via API]
+      </div>
+    </div>
+  </section>
+
+  <section class="faq-section">
+    <div class="faq-container">
+      <h2 class="faq-title">Dúvidas Frequentes</h2>
+      
+      <details class="faq-item">
+        <summary>Vocês têm opção de massa sem glúten?</summary>
+        <div class="faq-answer">Sim! Nós oferecemos uma opção de pizza napolitana artesanal sem glúten preparada em um ambiente separado para evitar contaminação cruzada. Basta selecionar a opção "Massa Sem Glúten" na hora de montar o seu pedido dinâmico.</div>
+      </details>
+
+      <details class="faq-item">
+        <summary>Quais são as formas de pagamento aceitas?</summary>
+        <div class="faq-answer">Aceitamos PIX (com aprovação instantânea no próprio site) e cartões de crédito/débito na entrega (Mastercard, Visa, Elo e Amex). Não aceitamos dinheiro em espécie por questões de segurança dos nossos entregadores.</div>
+      </details>
+
+      <details class="faq-item">
+        <summary>Quanto tempo demora a entrega?</summary>
+        <div class="faq-answer">Nosso tempo médio de entrega é de 35 a 45 minutos. Como você está pedindo pelo nosso sistema próprio e não por aplicativos de terceiros, seu pedido fura a fila e entra direto na nossa linha de produção.</div>
+      </details>
+
+      <details class="faq-item">
+        <summary>Posso pedir metade/metade (dois sabores)?</summary>
+        <div class="faq-answer">A verdadeira pizza napolitana tem um centro mais fino e úmido. Por conta das diferentes composições e tempos de cocção dos ingredientes a 400°C, não fazemos pizzas meio a meio para não comprometer a estrutura e o sabor original da receita.</div>
+      </details>
     </div>
   </section>
 
