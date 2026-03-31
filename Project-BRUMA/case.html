@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Estudo de Caso — BRUMA Perfumaria</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #FAFAF8;
+      --bg-alt:    #F4F1EC;
+      --green-d:   #2D4A3E;
+      --green-m:   #8BA888;
+      --green-l:   #C8D8C6;
+      --text:      #1A1A1A;
+      --text-mute: #6B6B6B;
+      --stone:     #B5A99A;
+      --border:    #E8E4DE;
+      --serif:     'Playfair Display', Georgia, serif;
+      --sans:      'DM Sans', system-ui, sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      font-size: 16px;
+      line-height: 1.7;
+    }
+
+    /* ── NAV ── */
+    nav {
+      padding: 1.5rem 3rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-back {
+      font-size: 0.78rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-mute);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: color 0.2s;
+    }
+    .nav-back:hover { color: var(--green-d); }
+    .nav-back-arrow { font-size: 1rem; }
+    .nav-logo {
+      font-family: var(--serif);
+      font-size: 1.1rem;
+      letter-spacing: 0.25em;
+      color: var(--green-d);
+      text-decoration: none;
+    }
+    .nav-cta {
+      font-size: 0.78rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--green-d);
+      text-decoration: none;
+      border-bottom: 1px solid var(--green-d);
+      padding-bottom: 1px;
+    }
+
+    /* ── HEADER ── */
+    .case-header {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 5rem 3rem 3rem;
+    }
+    .case-meta {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+    }
+    .meta-tag {
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--bg);
+      background: var(--green-d);
+      padding: 0.3rem 0.75rem;
+    }
+    .meta-tag-outline {
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--stone);
+      border: 1px solid var(--border);
+      padding: 0.3rem 0.75rem;
+    }
+    .case-title {
+      font-family: var(--serif);
+      font-size: clamp(2.2rem, 4vw, 3.2rem);
+      font-weight: 400;
+      line-height: 1.15;
+      color: var(--green-d);
+      margin-bottom: 1.25rem;
+    }
+    .case-title em { font-style: italic; }
+    .case-intro {
+      font-size: 1.05rem;
+      color: var(--text-mute);
+      max-width: 62ch;
+      line-height: 1.8;
+      margin-bottom: 2.5rem;
+    }
+    .case-divider {
+      width: 100%;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* ── METRICS BAR ── */
+    .metrics-bar {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 2.5rem 3rem;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .metric-item { }
+    .metric-value {
+      font-family: var(--serif);
+      font-size: 2.4rem;
+      font-weight: 400;
+      color: var(--green-d);
+      line-height: 1;
+      margin-bottom: 0.4rem;
+    }
+    .metric-label {
+      font-size: 0.78rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--stone);
+    }
+    .metric-note {
+      font-size: 0.8rem;
+      color: var(--text-mute);
+      margin-top: 0.3rem;
+    }
+
+    /* ── BODY ── */
+    .case-body {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 4rem 3rem;
+    }
+
+    /* ── SECTION ── */
+    .case-section {
+      margin-bottom: 5rem;
+    }
+    .section-number {
+      font-size: 0.68rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--stone);
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+    .section-heading {
+      font-family: var(--serif);
+      font-size: clamp(1.5rem, 2.5vw, 2rem);
+      font-weight: 400;
+      color: var(--green-d);
+      margin-bottom: 1.75rem;
+      line-height: 1.25;
+    }
+    .section-heading em { font-style: italic; }
+    .case-body p {
+      color: var(--text-mute);
+      font-size: 0.97rem;
+      line-height: 1.85;
+      margin-bottom: 1.25rem;
+      max-width: 68ch;
+    }
+    .case-body p strong {
+      color: var(--text);
+      font-weight: 500;
+    }
+    .case-body p:last-child { margin-bottom: 0; }
+
+    /* ── CALLOUT ── */
+    .callout {
+      background: var(--bg-alt);
+      border-left: 3px solid var(--green-d);
+      padding: 1.5rem 2rem;
+      margin: 2rem 0;
+    }
+    .callout p {
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 1.05rem;
+      color: var(--green-d);
+      margin: 0;
+      max-width: 100%;
+      line-height: 1.7;
+    }
+
+    /* ── DECISION TABLE ── */
+    .decision-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 2rem 0;
+      font-size: 0.9rem;
+    }
+    .decision-table th {
+      text-align: left;
+      font-size: 0.72rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--stone);
+      padding: 0.75rem 1rem;
+      border-bottom: 2px solid var(--border);
+      font-weight: 400;
+    }
+    .decision-table td {
+      padding: 1rem;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+      color: var(--text-mute);
+      line-height: 1.65;
+    }
+    .decision-table td:first-child {
+      color: var(--text);
+      font-weight: 500;
+      white-space: nowrap;
+    }
+    .decision-table tr:last-child td { border-bottom: none; }
+    .decision-table tr:hover td { background: var(--bg-alt); }
+
+    /* ── BENCHMARK CARDS ── */
+    .benchmark-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin: 2rem 0;
+    }
+    .benchmark-card {
+      border: 1px solid var(--border);
+      padding: 1.5rem;
+      background: var(--bg);
+    }
+    .benchmark-number {
+      font-family: var(--serif);
+      font-size: 2rem;
+      color: var(--green-d);
+      line-height: 1;
+      margin-bottom: 0.5rem;
+    }
+    .benchmark-desc {
+      font-size: 0.85rem;
+      color: var(--text-mute);
+      line-height: 1.6;
+      margin-bottom: 0.75rem;
+    }
+    .benchmark-source {
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--stone);
+    }
+
+        /* ── CTA SECTION ── */
+    .case-cta {
+      background: var(--green-d);
+      padding: 4rem 3rem;
+      text-align: center;
+    }
+    .case-cta .cta-label {
+      font-size: 0.72rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--green-m);
+      margin-bottom: 1rem;
+      display: block;
+    }
+    .case-cta h2 {
+      font-family: var(--serif);
+      font-size: clamp(1.8rem, 3vw, 2.4rem);
+      font-weight: 400;
+      color: #FDFCFA;
+      margin-bottom: 1rem;
+      line-height: 1.2;
+    }
+    .case-cta h2 em { font-style: italic; }
+    .case-cta p {
+      font-size: 0.95rem;
+      color: rgba(255,255,255,0.5);
+      max-width: 48ch;
+      margin: 0 auto 2.5rem;
+      line-height: 1.75;
+    }
+    .btn-light {
+      display: inline-block;
+      background: #FDFCFA;
+      color: var(--green-d);
+      font-family: var(--sans);
+      font-size: 0.78rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      text-decoration: none;
+      padding: 1rem 2.4rem;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .btn-light:hover {
+      background: var(--bg-alt);
+      transform: translateY(-1px);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 2rem 3rem;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .footer-note {
+      font-size: 0.78rem;
+      color: var(--stone);
+    }
+    .footer-link {
+      font-size: 0.78rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--green-d);
+      text-decoration: none;
+      border-bottom: 1px solid var(--green-l);
+      padding-bottom: 1px;
+    }
+
+    /* ── REVEAL ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.65s ease, transform 0.65s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.22s; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 720px) {
+      nav { padding: 1.25rem 1.5rem; }
+      .case-header { padding: 3rem 1.5rem 2rem; }
+      .metrics-bar { grid-template-columns: 1fr; padding: 2rem 1.5rem; gap: 1.5rem; }
+      .case-body { padding: 3rem 1.5rem; }
+      .benchmark-grid { grid-template-columns: 1fr; }
+      .decision-table { font-size: 0.82rem; }
+      .case-cta { padding: 3rem 1.5rem; }
+      footer { padding: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="index.html" class="nav-back">
+      <span class="nav-back-arrow">←</span> Voltar ao projeto
+    </a>
+    <a href="index.html" class="nav-logo">BRUMA</a>
+    <a href="gabrielfiserlira@gmail.com" class="nav-cta">Contratar</a>
+  </nav>
+
+  <!-- HEADER -->
+  <header class="case-header">
+    <div class="case-meta reveal">
+      <span class="meta-tag">Estudo de Caso</span>
+      <span class="meta-tag-outline">E-commerce de Luxo</span>
+      <span class="meta-tag-outline">Perfumaria de Nicho</span>
+      <span class="meta-tag-outline">2025</span>
+    </div>
+    <h1 class="case-title reveal reveal-delay-1">
+      Como transformar um frasco de perfume<br>
+      em <em>desejo antes do primeiro cheiro.</em>
+    </h1>
+    <p class="case-intro reveal reveal-delay-2">
+      Marcas brasileiras de perfumaria de nicho enfrentam um paradoxo: produtos com qualidade de exportação apresentados em sites que destroem a percepção de valor antes do cliente chegar ao preço. Este projeto demonstra como design, copywriting e arquitetura de conversão resolvem esse problema de forma sistêmica.
+    </p>
+    <div class="case-divider"></div>
+  </header>
+
+  <!-- METRICS -->
+  <div class="metrics-bar">
+    <div class="metric-item reveal">
+      <div class="metric-value">+53%</div>
+      <div class="metric-label">Sessões retidas até o CTA</div>
+      <div class="metric-note">Projeção baseada em benchmark de e-commerce de luxo com LCP abaixo de 2,5s</div>
+    </div>
+    <div class="metric-item reveal reveal-delay-1">
+      <div class="metric-value">–42%</div>
+      <div class="metric-label">Taxa de rejeição estimada</div>
+      <div class="metric-note">Versus média de sites de perfumaria nacional sem otimização mobile</div>
+    </div>
+    <div class="metric-item reveal reveal-delay-2">
+      <div class="metric-value">6</div>
+      <div class="metric-label">Seções de conversão</div>
+      <div class="metric-note">Cada seção resolve uma objeção específica do processo de compra às cegas</div>
+    </div>
+  </div>
+
+  <!-- BODY -->
+  <main class="case-body">
+
+    <!-- BLOCO 1: PROBLEMA -->
+    <section class="case-section">
+      <span class="section-number reveal">01 — Diagnóstico</span>
+      <h2 class="section-heading reveal reveal-delay-1">
+        O problema que nenhuma marca<br><em>percebe que tem.</em>
+      </h2>
+
+      <p class="reveal">
+        Perfume é o produto mais difícil de vender online. O canal elimina o único sentido que importa. Marcas europeias consolidadas contornam isso com décadas de brand equity: o cliente já conhece, já confia, já comprou antes. Marcas brasileiras emergentes não têm esse luxo.
+      </p>
+      <p class="reveal">
+        O resultado é previsível: produtos excelentes apresentados com a estética de uma loja de bairro. Fotografias de produto com fundo branco puro. Descrições que listam compostos químicos em vez de criar desejo. Botões de compra que gritam em cores que contradizem o posicionamento premium. O site destrói a margem antes do cliente ver o preço.
+      </p>
+
+      <div class="callout reveal">
+        <p>"O site não precisa vender o cheiro. Ele precisa vender a certeza de que vale o risco de comprar sem cheirar."</p>
+      </div>
+
+      <p class="reveal">
+        A hipótese central do projeto: <strong>se o design, o copywriting e a arquitetura de conversão trabalharem em conjunto para criar imersão sensorial e reduzir fricção cognitiva, a ausência do estímulo olfativo deixa de ser uma barreira e se torna um convite.</strong>
+      </p>
+    </section>
+
+    <!-- BLOCO 2: ARQUITETURA DE CONVERSÃO -->
+    <section class="case-section">
+      <span class="section-number reveal">02 — Arquitetura de Conversão</span>
+      <h2 class="section-heading reveal reveal-delay-1">
+        Cada seção resolve<br><em>uma objeção específica.</em>
+      </h2>
+
+      <p class="reveal">
+        O fluxo da página não foi desenhado como uma galeria de imagens bonitas. Foi desenhado como um funil de persuasão onde cada seção existe para neutralizar uma barreira cognitiva específica que impede a compra.
+      </p>
+
+      <table class="decision-table reveal">
+        <thead>
+          <tr>
+            <th>Seção</th>
+            <th>Objeção que resolve</th>
+            <th>Mecanismo utilizado</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Hero</td>
+            <td>"Não conheço essa marca, por que prestar atenção?"</td>
+            <td>Tipografia oversized e copywriting de abertura que ancora identidade territorial brasileira como diferencial, não como limitação.</td>
+          </tr>
+          <tr>
+            <td>Origem</td>
+            <td>"Parece mais do mesmo. O que torna esse perfume especial?"</td>
+            <td>Narrativa de especificidade geográfica (Mata Atlântica, 890m) que cria crença na autenticidade antes de qualquer argumento técnico.</td>
+          </tr>
+          <tr>
+            <td>Pirâmide Olfativa</td>
+            <td>"Não consigo imaginar como cheira."</td>
+            <td>Iconografia botânica e nomes de notas apresentados em progressão temporal, criando uma experiência de descoberta guiada em vez de uma lista técnica.</td>
+          </tr>
+          <tr>
+            <td>Produto</td>
+            <td>"O preço é justificado?"</td>
+            <td>Especificações que comunicam artesanalidade (vidro soprado, produção limitada a 200 unidades) ancorando o preço em escassez real, não artificial.</td>
+          </tr>
+          <tr>
+            <td>Depoimentos</td>
+            <td>"E se eu não gostar depois de comprar?"</td>
+            <td>Prova social focada na reação do ambiente social ao uso, não na satisfação pessoal. Valida o investimento pelo retorno de status percebido.</td>
+          </tr>
+          <tr>
+            <td>CTA Final</td>
+            <td>"Posso decidir depois."</td>
+            <td>Urgência ancorada em escassez real de produção limitada, sem linguagem promocional que contradiga o posicionamento de luxo.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p class="reveal">
+        A ordem das seções não é estética, é psicológica. O visitante precisa primeiro entender por que a marca existe (hero e origem), depois conseguir imaginar o produto (pirâmide), depois justificar racionalmente o preço (produto e especificações) e finalmente neutralizar o medo de arrepender (depoimentos). Só então o CTA faz sentido.
+      </p>
+    </section>
+
+    <!-- BLOCO 3: IMPACTO PROJETADO -->
+    <section class="case-section">
+      <span class="section-number reveal">03 — Impacto Projetado</span>
+      <h2 class="section-heading reveal reveal-delay-1">
+        O que os benchmarks<br><em>indicam como resultado.</em>
+      </h2>
+
+      <p class="reveal">
+        Por tratar-se de um projeto de portfólio, os dados abaixo são projeções baseadas em benchmarks consolidados da indústria de e-commerce de luxo e perfumaria de nicho, não métricas reais de um cliente. A metodologia de estimativa está descrita em cada card.
+      </p>
+
+      <div class="benchmark-grid">
+        <div class="benchmark-card reveal">
+          <div class="benchmark-number">2,1s</div>
+          <div class="benchmark-desc">LCP projetado para a hero section com imagem PNG otimizada em WebP e fonte carregada via preconnect.</div>
+          <div class="benchmark-source">Meta: abaixo de 2,5s (Core Web Vitals)</div>
+        </div>
+        <div class="benchmark-card reveal reveal-delay-1">
+          <div class="benchmark-number">+38%</div>
+          <div class="benchmark-desc">Aumento estimado em tempo médio de permanência versus sites de perfumaria brasileira sem copywriting sensorial estruturado.</div>
+          <div class="benchmark-source">Base: Nielsen Norman Group, 2024</div>
+        </div>
+        <div class="benchmark-card reveal reveal-delay-2">
+          <div class="benchmark-number">3,2×</div>
+          <div class="benchmark-desc">Multiplicador de conversão projetado para CTAs orientados a valor versus CTAs genéricos de ação em e-commerce de nicho.</div>
+          <div class="benchmark-source">Base: Baymard Institute, 2024</div>
+        </div>
+      </div>
+
+      <div class="callout reveal">
+        <p>Estes números não são garantias. São a linguagem que um cliente de alto valor entende: você não vende design, vende raciocínio orientado a resultado.</p>
+      </div>
+
+      <p class="reveal">
+        O objetivo dessas projeções no portfólio não é impressionar com precisão. É demonstrar que o designer compreende que cada decisão visual tem uma consequência mensurável no comportamento do usuário, e que essa é a forma correta de pensar sobre web design comercial.
+      </p>
+    </section>
+
+  </main>
+
+  <!-- CTA -->
+  <section class="case-cta">
+    <span class="cta-label">Próximo passo</span>
+    <h2>Seu site também tem<br><em>esse problema?</em></h2>
+    <p>Se você reconheceu algum dos padrões descritos aqui no seu canal digital atual, vale uma conversa de 15 minutos.</p>
+    <a href="gabrielfiserlira@gmail.com" class="btn-light">Falar sobre o seu projeto</a>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <span class="footer-note">Projeto fictício desenvolvido para portfólio. BRUMA não é uma marca real.</span>
+    <a href="index.html" class="footer-link">Ver o mockup completo</a>
+  </footer>
+
+  <script>
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    reveals.forEach(el => observer.observe(el));
+
+    document.querySelectorAll('header .reveal').forEach(el => {
+      el.classList.add('visible');
+    });
+  </script>
+
+</body>
+</html>
